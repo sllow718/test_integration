@@ -1,0 +1,13 @@
+:root{
+  --bg: #f7f7fb;
+  --card: #ffffff;
+  --muted: #555;
+}
+html,body,#__next{height:100%}
+body{
+  margin:0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background:var(--bg);
+  color:#111;
+}
+a{color:inherit}

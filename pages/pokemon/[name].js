@@ -23,25 +23,45 @@ export default function Pokemon({ pokemon }) {
   }
 
   return (
-    <div className={styles.container}>
-      <Link href="/">← Back</Link>
-      <h1>{name}</h1>
-      <div className={styles.top}>
-        <img src={image} alt={name} className={styles.image} />
-        <div className={styles.info}>
-          <button className={`${styles.likeButton} ${liked ? styles.liked : ''}`} onClick={toggleLike}>
-            {liked ? '♥ Liked' : '♡ Like'}
-          </button>
-          <h3>Stats</h3>
-          <ul>
-            {pokemon.stats.map(s => (
-              <li key={s.stat.name}>{s.stat.name}: {s.base_stat}</li>
-            ))}
-          </ul>
-          <h3>Types</h3>
-          <ul>
-            {pokemon.types.map(t => <li key={t.type.name}>{t.type.name}</li>)}
-          </ul>
+    <div className={styles.page}>
+      <div className={styles.card}>
+        <Link href="/" className={styles.back}>← Back</Link>
+
+        <div className={styles.topRow}>
+          <div className={styles.imageWrap}>
+            <img src={image} alt={name} className={styles.image} />
+          </div>
+
+          <div className={styles.info}>
+            <div className={styles.titleRow}>
+              <h1 className={styles.title}>{name}</h1>
+              <button className={`${styles.likeButton} ${liked ? styles.liked : ''}`} onClick={toggleLike} aria-pressed={liked}>
+                {liked ? '♥ Liked' : '♡ Like'}
+              </button>
+            </div>
+
+            <div className={styles.types}>
+              {pokemon.types.map(t => (
+                <span key={t.type.name} className={styles.type}>{t.type.name}</span>
+              ))}
+            </div>
+
+            <h3 className={styles.statsHeader}>Stats</h3>
+            <div className={styles.stats}>
+              {pokemon.stats.map(s => {
+                const pct = Math.round((s.base_stat / 255) * 100)
+                return (
+                  <div key={s.stat.name} className={styles.statRow}>
+                    <div className={styles.statName}>{s.stat.name}</div>
+                    <div className={styles.statBar} aria-hidden>
+                      <div className={styles.statFill} style={{ width: `${pct}%` }} />
+                    </div>
+                    <div className={styles.statValue}>{s.base_stat}</div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>

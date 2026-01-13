@@ -1,8 +1,13 @@
 :root{
   --bg: #f7f7fb;
   --card: #ffffff;
-  --muted: #555;
+  --card-bg-start: #ffffff;
+  --card-bg-end: #fbfdff;
+  --muted: #64748b;
+  --accent-1: #60a5fa;
+  --accent-2: #06b6d4;
 }
+
 html,body,#__next{height:100%}
 body{
   margin:0;

@@ -1,14 +1,39 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useMemo, useState } from 'react'
 import styles from '../styles/Home.module.css'
 
 export default function Home({ pokemons }) {
+  const [query, setQuery] = useState('')
+  const normalized = query.trim().toLowerCase()
+
+  const filtered = useMemo(() => {
+    if (!normalized) return pokemons
+    return pokemons.filter(p => p.name.toLowerCase().includes(normalized))
+  }, [pokemons, normalized])
+
   return (
     <div className={styles.container}>
       <h1>Pokémon Dictionary</h1>
       <p>Click a Pokémon to view details and like it.</p>
+
+      <div className={styles.searchBar}>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search Pokémon by name..."
+          className={styles.searchInput}
+          aria-label="Search pokemons"
+        />
+        {query && (
+          <button className={styles.clearBtn} onClick={() => setQuery('')}>Clear</button>
+        )}
+      </div>
+
+      <div className={styles.searchCount}>{filtered.length} result{filtered.length !== 1 ? 's' : ''}</div>
+
       <div className={styles.grid}>
-        {pokemons.map(p => (
+        {filtered.map(p => (
           <Link key={p.name} href={`/pokemon/${p.name}`} className={styles.card}>
             <div>
               <img src={p.image} alt={p.name} className={styles.sprite} />
